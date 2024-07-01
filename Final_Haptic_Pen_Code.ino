@@ -87,7 +87,7 @@ void loop() {
 }
 
 void simulatePenPosition(float deltaTime) {
-  if (simulationState) {
+  if (simulationState && !bluetooth.available()) {
     Wire.beginTransmission(MPU_ADDR);
     Wire.write(0x3B); // starting with register 0x3B (ACCEL_XOUT_H)
     Wire.endTransmission(false);
@@ -134,7 +134,7 @@ float integrateAcceleration(float acc, float lastAcc, float dt) {
 }
 
 void ActionOne() {
-  if (digitalRead(buttonPin) == LOW) {
+  if (digitalRead(buttonPin) == LOW && !bluetooth.available()) {
     static unsigned long lastDebounceTime = 0;
     unsigned long debounceDelay = 100;
 
